@@ -7,5 +7,5 @@
     align-items: center;
 }
 .title {
-    font-size: var(--mark-size);
+    font-size: calc(var(--mark-size) / 2);
 }

@@ -34,7 +34,7 @@ function Mark({ size, ...props }: MarkType) {
           style={{ height: `${size}px`, width: `${size}px` }}
         />
       </IconButton>
-      <p className={style.title}>Doggy Catty</p>
+      <div className={style.title}>Doggy Catty</div>
     </div>
   )
 }
