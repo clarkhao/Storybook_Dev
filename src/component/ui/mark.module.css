@@ -6,6 +6,6 @@
     justify-content:flex-start;
     align-items: center;
 }
-.container p {
-    font-size: calc(var(--mark-size)/2);
+.title {
+    font-size: var(--mark-size);
 }
