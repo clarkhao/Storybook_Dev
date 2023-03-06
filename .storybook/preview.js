@@ -1,6 +1,8 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "../src/component/utils";
 import { useMemo } from "react";
+import { RouterContext } from "next/dist/shared/lib/router-context";
+
 const THEMES = {
   light: lightTheme,
   dark: darkTheme,
@@ -29,6 +31,9 @@ export const parameters = {
       color: /(background|color)$/i,
       date: /Date$/,
     },
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 }
 
