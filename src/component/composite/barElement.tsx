@@ -3,8 +3,8 @@ import React from 'react';
 //style
 import style from './barElement.module.css';
 //组件
-import Mark from '../ui/mark';
-import Input from '../ui/input';
+import Mark from '../ui/Mark';
+import Input from '../ui/Input';
 import Button from '@mui/material/Button';
 
 export function Left() {
@@ -28,7 +28,7 @@ export function Left() {
     }, [searchText])
     return (
         <div className={style.container}>
-            <Mark size={40} handleClick={handleClick}/>
+            <Mark size={40} />
             <form method='post'>
                 <Input id='bar-search' type='search' name='bar-search'
                     handleFocus={handleFocus}

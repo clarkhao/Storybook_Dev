@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  background-image: linear-gradient(var(--signup-left-bg),white);
+  color: var(--signup-left-font-color);
+  display: flex;
+  flex-direction: column;
+}
+.container h1, .container p {
+  padding: 0 20px;
+}
+.animate {
+  flex: 2;
+}

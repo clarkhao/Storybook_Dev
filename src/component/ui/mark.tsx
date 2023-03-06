@@ -1,13 +1,14 @@
 //应用
-import React from 'react';
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
+import React, { ReactElement } from 'react';
+import { Player } from '@lottiefiles/react-lottie-player';
 //style
-import style from './mark.module.css';
+import style from './Mark.module.css';
 import { css } from '@emotion/react';
 //组件
 import IconButton from '@mui/material/IconButton';
 //hooks
 import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
 
 type MarkType = {
   /**
@@ -15,21 +16,20 @@ type MarkType = {
    */
   size: number;
   /**
-   * click handler
+   * lottie file uri
    */
-  handleClick: React.MouseEventHandler;
+  src?: string;
 }
 
 function Mark({ size, ...props }: MarkType) {
-  const theme = useTheme();
-  console.log(theme.palette.primary);
+  const router = useRouter();
   return (
     <div className={style.container} css={css`--mark-size: ${size}px;`}>
-      <IconButton onClick={props.handleClick}>
+      <IconButton onClick={() => {router.push('/')}} color='default'>
         <Player
           autoplay
           loop
-          src="https://assets1.lottiefiles.com/packages/lf20_myejiggj.json"
+          src={props.src ?? "https://assets8.lottiefiles.com/packages/lf20_cy11of6d.json"}
           className='player'
           style={{ height: `${size}px`, width: `${size}px` }}
         />

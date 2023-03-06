@@ -1,3 +1,4 @@
+const path = require('path');
 module.exports = {
   "stories": [
     "../src/stories/**/*.stories.mdx",
@@ -6,8 +7,9 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    "@storybook/addon-actions",
     "@storybook/addon-interactions",
-    '@storybook/addon-actions',
+    "storybook-addon-next-router",
   ],
   "framework": "@storybook/react",
   "core": {
@@ -17,4 +19,7 @@ module.exports = {
     config.presets.push(require.resolve("@emotion/babel-preset-css-prop"));
     return config;
   },
+  features: {
+    interactionDebugger: true,
+  }
 }
