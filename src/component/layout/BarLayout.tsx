@@ -1,7 +1,7 @@
 //应用
 import React from 'react';
 //style
-import style from './Bar.module.css';
+import style from './BarLayout.module.css';
 //组件
 import {Left, Right} from '../composite/BarElement';
 

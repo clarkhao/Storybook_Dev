@@ -1,7 +1,7 @@
 //应用
 import React from 'react';
 //style
-import style from './Card.module.css';
+import style from './CardLayout.module.css';
 import { useTheme } from '@mui/material/styles';
 import {css} from '@emotion/react';
 
