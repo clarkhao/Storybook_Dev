@@ -4,6 +4,7 @@
   height: 100%;
   background-image: linear-gradient(var(--signup-left-bg),white);
   color: var(--signup-left-font-color);
+  box-shadow: var(--signup-left-shadow);
   display: flex;
   flex-direction: column;
 }

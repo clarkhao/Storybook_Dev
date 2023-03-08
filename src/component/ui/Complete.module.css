@@ -1,0 +1,34 @@
+.container {
+  width: var(--success-size);
+  height: var(--success-size);
+  position: relative;
+}
+.outer {
+  width: 90%;
+  height: 90%;
+  background-image: conic-gradient(var(--success-bg) 0deg, var(--success-inner-bg) 0deg);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner {
+  width: 80%;
+  height: 80%;
+  background-color: var(--success-inner-bg);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inner svg {
+  color: white;
+  width: 0px;
+  height: auto;
+}

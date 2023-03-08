@@ -1,0 +1,52 @@
+.success-outer-enter {
+  transform: scale(1.2);
+}
+.success-outer-enter-active {
+  width: 55%;
+  height: 55%;
+  transition: all 0.5s;
+}
+.success-outer-exit-done {
+  width: 80%;
+  height: 80%;
+  background-color: var(--success-bg);
+  transition: all 0.8s;
+}
+/* */
+.success-outer-enter .inner {
+  width: 75%;
+  height: 75%;
+  background-color: var(--success-bg);
+}
+.success-outer-enter-active .inner {
+  width: 9%;
+  height: 9%;
+  background-color: var(--success-bg);
+}
+.success-outer-exit .inner {
+  width: 15%;
+  height: 15%;
+  background-color: var(--success-bg);
+}
+.success-outer-exit-active .inner {
+  width: 90%;
+  height: 90%;
+  transition: all 0.5s;
+  background-color: var(--success-bg);
+}
+.success-outer-exit-done .inner {
+  width: 90%;
+  height: 90%;
+  background-color: var(--success-bg);
+}
+/* */
+.success-outer-exit .inner svg {
+  width: 5%;
+}
+.success-outer-exit-active .inner svg {
+  width: 90%;
+  transition: all 0.5s;
+}
+.success-outer-exit-done .inner svg {
+  width: 90%;
+}

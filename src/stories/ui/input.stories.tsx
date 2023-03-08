@@ -18,7 +18,6 @@ const Template: ComponentStory<typeof Input> = (args) => <Input {...args} />;
 
 export const InputStory = Template.bind({});
 InputStory.args = {
-    id: 'input-story', 
     type: 'search',
     labelText: 'search'
 };
