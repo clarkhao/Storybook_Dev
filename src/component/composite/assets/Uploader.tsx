@@ -6,7 +6,7 @@
  */
 //应用模块
 import React from 'react';
-import {randomString,iconLibrary} from '../utils'
+import {randomString,iconLibrary} from '../../utils'
 import axios, { AxiosProgressEvent } from "axios";
 import { Fragment } from "react";
 //style
@@ -14,16 +14,16 @@ import style from './Upload.module.css';
 import { useTheme } from '@mui/material/styles';
 import {css} from '@emotion/react';
 //组件
-import {FileListType,FileNameListType,FileErrMsgType} from '../utils/type';
+import {FileListType,FileNameListType,FileErrMsgType} from '../../utils/type';
 import Button from '@mui/material/Button';
-import DropZone from "../ui/DropZone";
-import {modifyAndValidate} from '../utils/validate/file';
+import DropZone from "../../ui/DropZoneUI";
+import {modifyAndValidate} from '../../utils/validate/file';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import SvgIcon from '@mui/material/SvgIcon';
-import Progress from '../ui/Progress';
+import Progress from '../../ui/ProgressUI';
 //hook
-import {uploadReducer, initialUploadState} from '../utils/hook/upload';
+import {uploadReducer, initialUploadState} from '../../utils/hook/upload';
 
 function Upload() {
     /**

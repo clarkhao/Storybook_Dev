@@ -2,7 +2,7 @@
 import React from 'react';
 import {FileNameListType} from '../utils/type';
 //style
-import style from './list.module.css';
+import style from './listUI.module.css';
 import {iconLibrary} from '../utils/define';
 import { useTheme } from '@mui/material/styles';
 import {css} from '@emotion/react';

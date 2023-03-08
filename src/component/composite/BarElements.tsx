@@ -1,10 +1,10 @@
 //应用
 import React from 'react';
 //style
-import style from './BarElement.module.css';
+import style from './BarElements.module.css';
 //组件
-import Mark from '../ui/Mark';
-import Input from '../ui/Input';
+import Mark from '../ui/MarkUI';
+import Input from '../ui/InputUI';
 import Button from '@mui/material/Button';
 
 export function Left() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Switch from '../component/ui/Switch';
+import Switch from '../component/ui/SwitchUI';
 
 export default {
     title: 'UI/Switch',

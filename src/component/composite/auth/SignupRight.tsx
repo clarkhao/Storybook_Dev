@@ -7,7 +7,7 @@ import style from "./SignupRight.module.css";
 import { useTheme } from "@mui/material/styles";
 import { css } from "@emotion/react";
 //组件
-import Input from "../../ui/Input";
+import Input from "../../ui/InputUI";
 import Button from "@mui/material/Button";
 import { iconLibrary } from "../../utils";
 import Link from "next/link";
