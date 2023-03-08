@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Bar from '../component/layout/bar';
+import Bar from '../component/layout/Bar';
 
 export default {
     title: 'Composite/Bar',

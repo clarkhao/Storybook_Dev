@@ -4,7 +4,7 @@
 //应用
 import React from 'react';
 //style
-import style from './progress.module.css';
+import style from './Progress.module.css';
 //组件
 import LinearProgress from '@mui/material/LinearProgress';
 
