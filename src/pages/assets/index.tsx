@@ -9,8 +9,8 @@ import React from 'react';
 //style 
 import style from '../../styles/assets.module.css';
 //组件
-import Bar from '../../component/layout/bar';
-import {Left, Right} from '../../component/composite/barElement';
+import Bar from '../../component/layout/Bar';
+import {Left, Right} from '../../component/composite/BarElement';
 
 function Assets() {
     return (

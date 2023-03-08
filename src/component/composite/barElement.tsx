@@ -1,7 +1,7 @@
 //应用
 import React from 'react';
 //style
-import style from './barElement.module.css';
+import style from './BarElement.module.css';
 //组件
 import Mark from '../ui/Mark';
 import Input from '../ui/Input';

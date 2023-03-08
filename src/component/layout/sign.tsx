@@ -1,5 +1,5 @@
 import React from 'react';
-import style from './sign.module.css';
+import style from './Sign.module.css';
 
 export type signType = {
     lChild: React.ReactNode,

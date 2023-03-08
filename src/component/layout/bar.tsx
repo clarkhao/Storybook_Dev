@@ -1,9 +1,9 @@
 //应用
 import React from 'react';
 //style
-import style from './bar.module.css';
+import style from './Bar.module.css';
 //组件
-import {Left, Right} from '../composite/barElement';
+import {Left, Right} from '../composite/BarElement';
 
 type BarType = {
     /**
