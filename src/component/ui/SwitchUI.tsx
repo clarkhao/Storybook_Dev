@@ -1,7 +1,7 @@
 //应用
 import React from 'react';
 //style
-import style from './Switch.module.css';
+import style from './SwitchUI.module.css';
 import { css } from '@emotion/react';
 
 type SwitchType = {

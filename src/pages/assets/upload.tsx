@@ -10,7 +10,7 @@ import style from '../../styles/assetsUpload.module.css';
 import { PaletteMode, createTheme, ThemeProvider } from '@mui/material';
 //组件
 import CardLayout from "../../component/layout/CardLayout";
-import Upload from '../../component/composite/Upload';
+import Upload from '../../component/composite/assets/Uploader';
 
 export default function UploadPage({}) {
     

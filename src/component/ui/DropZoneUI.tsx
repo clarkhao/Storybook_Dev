@@ -3,11 +3,11 @@ import React from 'react';
 import {FileNameListType,FileErrMsgType} from '../utils/type';
 import {iconLibrary} from '../utils/define';
 //style
-import style from './DropZone.module.css';
+import style from './DropZoneUI.module.css';
 import {css} from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 //组件
-import List from './List';
+import List from './ListUI';
 
 export type DropZoneType = {
     /**

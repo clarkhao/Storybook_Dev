@@ -6,7 +6,7 @@ import style from "./SignupLeft.module.css";
 import { useTheme } from "@mui/material/styles";
 import { css } from "@emotion/react";
 //组件
-import Mark from "../../ui/Mark";
+import Mark from "../../ui/MarkUI";
 
 type TSignupLeft = {
   /**

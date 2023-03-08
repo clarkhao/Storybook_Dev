@@ -2,7 +2,7 @@
 import React, { ReactElement } from 'react';
 import { Player } from '@lottiefiles/react-lottie-player';
 //style
-import style from './Mark.module.css';
+import style from './MarkUI.module.css';
 import { css } from '@emotion/react';
 //组件
 import IconButton from '@mui/material/IconButton';

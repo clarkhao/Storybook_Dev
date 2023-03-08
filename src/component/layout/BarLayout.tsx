@@ -3,7 +3,7 @@ import React from 'react';
 //style
 import style from './BarLayout.module.css';
 //组件
-import {Left, Right} from '../composite/BarElement';
+import {Left, Right} from '../composite/BarElements';
 
 type BarType = {
     /**

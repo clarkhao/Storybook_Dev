@@ -10,7 +10,7 @@ import React from 'react';
 import style from '../../styles/assets.module.css';
 //组件
 import Bar from '../../component/layout/BarLayout';
-import {Left, Right} from '../../component/composite/BarElement';
+import {Left, Right} from '../../component/composite/BarElements';
 
 function Assets() {
     return (
