@@ -30,7 +30,7 @@ export function Left() {
         <div className={style.container}>
             <Mark size={40} />
             <form method='post'>
-                <Input id='bar-search' type='search' name='bar-search'
+                <Input type='search' name='bar-search'
                     handleFocus={handleFocus}
                     handleEnterClick={handleEnterClick}/>
             </form>

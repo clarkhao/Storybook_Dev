@@ -1,5 +1,5 @@
 //应用
-import React, { useRef } from "react";
+import React, { useRef, useId } from "react";
 //style
 import style from "./Input.module.css";
 import { css } from "@emotion/react";
@@ -10,10 +10,6 @@ import { iconLibrary } from "../utils/define";
 import { useInput } from "../utils";
 
 type InputType = {
-  /**
-   * id used for input element
-   */
-  id: string;
   /**
    * type indicated icon and input type,
    * 'email'|'password'|'text'|'search'
@@ -56,8 +52,9 @@ type InputType = {
    */
 };
 
-function Input({ id, type, width = "200px", value, ...props }: InputType) {
+function Input({ type, width = "200px", value, ...props }: InputType) {
   const theme = useTheme();
+  const inputId = useId();
   const { inputState, inputDispatch } = useInput(props.errMsg);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -113,7 +110,7 @@ function Input({ id, type, width = "200px", value, ...props }: InputType) {
           type === "password" ? style.eye : "",
         ].join(" ")}
         ref={inputRef}
-        id={id}
+        id={inputId}
         type={type === "password" ? inputState.pwdToggle.type : type}
         name={props.name}
         value={value ?? inputState.inputValue}
@@ -128,7 +125,7 @@ function Input({ id, type, width = "200px", value, ...props }: InputType) {
       <span
         className={[
           style.ricon,
-          (value || inputState.inputValue) ? style.visible : "",
+          value || inputState.inputValue ? style.visible : "",
         ].join(" ")}
         onClick={handleTypeChange}
       >
@@ -140,9 +137,11 @@ function Input({ id, type, width = "200px", value, ...props }: InputType) {
         <label
           className={[
             style.label,
-            inputState.isInputFilled ? style.fill : "",
+            (value && value.length > 0) || inputState.isInputFilled
+              ? style.fill
+              : "",
           ].join(" ")}
-          htmlFor={id}
+          htmlFor={inputId}
         >
           {props.labelText ?? type}
         </label>

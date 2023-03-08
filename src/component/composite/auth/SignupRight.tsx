@@ -1,5 +1,7 @@
 //应用模块
 import React, { Fragment } from "react";
+import { verifySignup, signupSchema } from "../../utils/validate";
+import { hybridEncrypt } from "../../utils";
 //style
 import style from "./SignupRight.module.css";
 import { useTheme } from "@mui/material/styles";
@@ -14,26 +16,97 @@ type TSignupRight = {};
 
 function SignupRight({ ...props }: TSignupRight) {
   const theme = useTheme();
-  const [email, setEmail] = React.useState('');
-  const [user, setUser] = React.useState('');
-  const [pwd, setPwd] = React.useState('');
-  const [rePwd, setRePwd] = React.useState('');
+  const [data, setData] = React.useState({
+    email: "",
+    name: "",
+    password: "",
+    rePwd: "",
+  });
+  const [errMsgs, setErrMsgs] = React.useState({
+    email: "",
+    name: "",
+    password: "",
+    rePwd: "",
+  });
+  //开始处理加密开始loading, loading true时出现loading图标
+  const [isLoading, setIsLoading] = React.useState(false);
+  //如果成功出现成功提示
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setEmail(e.target.value);
-  }
+    setData({ ...data, email: e.target.value });
+  };
   const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setUser(e.target.value);
-  }
+    setData({ ...data, name: e.target.value });
+  };
   const handlePwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setPwd(e.target.value);
-  }
+    setData({ ...data, password: e.target.value });
+  };
   const handleRePwdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    setRePwd(e.target.value);
-  }
+    setData({ ...data, rePwd: e.target.value });
+  };
+  const handleClearErr = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setErrMsgs({ ...errMsgs, email: "", name: "", password: "", rePwd: "" });
+  };
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      e.preventDefault();
+      //verify data
+      const verified = signupSchema.safeParse(data);
+      if (!verified.success) {
+        const issues = verified.error.issues;
+        const errSet = new Set();
+        const errMessages: { [key: string]: string } = {};
+        issues
+          .filter((e) => {
+            if (!errSet.has(e.path[0])) {
+              errSet.add(e.path[0]);
+              return true;
+            } else {
+              return false;
+            }
+          })
+          .forEach((e) => {
+            errMessages[e.path[0]] = e.message;
+          });
+        console.log(`errMessages: ${JSON.stringify(errMessages)}`);
+        setErrMsgs({ ...errMsgs, ...errMessages });
+      } else {
+        setIsLoading(true);
+        //encrypt data
+        const encrypted = await hybridEncrypt(verified.data);
+        //post data
+        fetch('https://userauth.clarkhao.repl.co/api/v0/auth/signup', {
+          method: 'POST',
+          mode: 'cors',
+          body: new URLSearchParams({data: encrypted}),
+          cache: 'no-cache',
+          redirect: 'follow'
+        }).then(response => {
+          setIsLoading(false);
+          if(response.status === 201) {
+            
+          } else {
+            return response.json();
+          }
+        })
+        .then(response => {
+          const data = new URLSearchParams(response);
+          console.log(data.get('msg'));          
+
+        })
+      }
+      
+    } catch (error) {
+      //可能的错误，加密失败，网络失败
+      console.log(`${error}`);
+    }
+  };
   return (
     <div
       className={style.container}
@@ -52,45 +125,45 @@ function SignupRight({ ...props }: TSignupRight) {
       </header>
       <form id="signup-form" className={style.form}>
         <Input
-          id="signup-email"
           type="email"
           name="email"
           width="100%"
-          value={email}
+          value={data.email}
           handleInput={handleEmailInput}
-          handleFocus={() => {}}
+          errMsg={errMsgs.email}
+          handleFocus={handleClearErr}
         />
         <Input
-          id="signup-user"
           type="text"
-          name="user"
+          name="name"
           labelText="User"
           width="100%"
-          value={user}
+          value={data.name}
           handleInput={handleUserInput}
-          handleFocus={() => {}}
+          errMsg={errMsgs.name}
+          handleFocus={handleClearErr}
         />
         <Input
-          id="signup-pwd"
           type="password"
           name="pwd"
           width="100%"
-          value={pwd}
+          value={data.password}
           handleInput={handlePwdInput}
-          handleFocus={() => {}}
+          errMsg={errMsgs.password}
+          handleFocus={handleClearErr}
         />
         <Input
-          id="signup-rpwd"
           type="password"
           name="rpwd"
           labelText="确认密码"
           width="100%"
-          value={rePwd}
+          value={data.rePwd}
           handleInput={handleRePwdInput}
-          handleFocus={() => {}}
+          errMsg={errMsgs.rePwd}
+          handleFocus={handleClearErr}
         />
         <Link href="/auth/privacy">点击创建账户，同意隐私条款</Link>
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" fullWidth onClick={handleSubmit}>
           创建账户
         </Button>
       </form>
