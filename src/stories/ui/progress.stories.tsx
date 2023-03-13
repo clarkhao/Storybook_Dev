@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Progress from '../component/ui/ProgressUI';
+import Progress from '../../component/ui/ProgressUI';
 
 export default {
     title: 'UI/Progress',

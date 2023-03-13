@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Input from '../../component/ui/Input';
+import Input from '../../component/ui/InputUI';
 
 export default {
     title: 'UI/Input',

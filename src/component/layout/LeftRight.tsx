@@ -10,15 +10,15 @@ type TLeftRight = {
   /**
    * children from left
    */
-  left: EmotionJSX.Element | React.ReactNode;
+  left: React.ReactNode;
   /**
    * children from right
    */
-  right: EmotionJSX.Element | React.ReactNode;
+  right: React.ReactNode;
 }
 
 function LeftRight({left, right, ...props}: TLeftRight) {
-  return <div className={style.container}>
+  return <div className={style.container} id='signup-card'>
     {left}
     {right}
   </div>

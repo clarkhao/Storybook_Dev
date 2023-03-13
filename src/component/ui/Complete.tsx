@@ -2,7 +2,6 @@
 import React, { useRef } from "react";
 //style
 import style from "./Complete.module.css";
-import "./Complete.css";
 import { css } from "@emotion/react";
 import { useTheme } from "@mui/material/styles";
 //组件
@@ -27,23 +26,16 @@ function Complete({ size = "150px", ...props }: IComplete) {
   const [svg, setSvg] = React.useState(false);
   React.useEffect(() => {
     if (typeof window !== "undefined") {
-      const timer = window.setInterval(() => {
-        setProgress((progress) => progress + rate);
-      }, 20);
+      const timer = window.setTimeout(() => {
+        setInProp(true);
+      }, 500);
       setStop(timer);
-      return () => clearInterval(timer);
+      return () => clearTimeout(timer);
+    } else {
+      console.log("no such effect");
     }
-  }, [rate]);
-  React.useEffect(() => {
-    console.log(progress);
-    if (progress > 30) setRate(2);
-    if (progress > 50) setRate(5);
-    if (progress > 99) {
-      console.log(progress);
-      clearInterval(stop);
-      setInProp(true);
-    }
-  }, [progress, stop]);
+  }, []);
+    
   return (
     <div
       className={style.container}
@@ -56,23 +48,14 @@ function Complete({ size = "150px", ...props }: IComplete) {
       <CSSTransition
         nodeRef={outerRef}
         in={inProp}
-        timeout={500}
-        classNames="success-outer"
+        timeout={1000}
+        classNames="success"
         onEntered={() => {
           setInProp(false);
           setSvg(true);
         }}
       >
-        <div
-          className={style.outer}
-          ref={outerRef}
-          css={css`
-            background-image: conic-gradient(
-              ${theme.palette.success.light} ${3.6 * progress}deg,
-              ${theme.palette.background.default} 0deg
-            );
-          `}
-        >
+        <div className={style.outer} ref={outerRef}>
           <div className={[style.inner, "inner"].join(" ")}>
             {svg ? <FiCheck /> : null}
           </div>

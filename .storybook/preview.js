@@ -1,3 +1,6 @@
+//引入全局css
+import '../src/styles/globals.css';
+import '../src/component/ui/Complete.css';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { darkTheme, lightTheme } from "../src/component/utils";
 import { useMemo } from "react";

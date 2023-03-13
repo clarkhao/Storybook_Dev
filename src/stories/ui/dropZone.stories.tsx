@@ -1,8 +1,8 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import DropZone from '../component/ui/DropZoneUI';
+import DropZone from '../../component/ui/DropZoneUI';
 import SvgIcon from '@mui/material/SvgIcon';
-import {iconLibrary} from '../component/utils/define';
+import {iconLibrary} from '../../component/utils';
 
 export default {
   title: 'UI/DropZone',

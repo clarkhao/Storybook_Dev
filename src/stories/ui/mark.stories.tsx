@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Mark from '../component/ui/MarkUI';
+import Mark from '../../component/ui/MarkUI';
 
 export default {
   title: 'UI/Mark',

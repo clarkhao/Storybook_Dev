@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import Switch from '../component/ui/SwitchUI';
+import Switch from '../../component/ui/SwitchUI';
 
 export default {
     title: 'UI/Switch',
@@ -11,7 +11,7 @@ export default {
 const Template: ComponentStory<typeof Switch> = (args) => <Switch {...args} />;
 
 export const SwitchStory = Template.bind({});
-SwitchStory.args = {id: 'switch-theme'};
+SwitchStory.args = {};
 SwitchStory.play = async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 }

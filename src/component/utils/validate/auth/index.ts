@@ -12,25 +12,25 @@ type TSignupData = {
 
 export const signupSchema = z
   .object({
-    email: z.string().email({ message: "invalid email format" }).trim(),
+    email: z.string().email({ message: "email" }).trim(),
     name: z
       .string()
-      .min(5, { message: "name at least 5 characters" })
-      .max(25, { message: "name at most 25 characters" })
-      .regex(/^[a-zA-Z0-9]+$/, { message: "name made up of alphanumeric" })
+      .min(5, { message: "min" })
+      .max(25, { message: "max" })
+      .regex(/^[a-zA-Z0-9]+$/, { message: "regex" })
       .trim(),
     password: z
       .string()
       .min(6, {
-        message: "at least 6 characters",
+        message: "min",
       })
       .regex(/^(?=.*[A-Z])[a-zA-Z0-9]+$/, {
-        message: "at least one uppercase character",
+        message: "regex",
       }),
     rePwd: z.string(),
   })
   .refine((data) => data.password === data.rePwd, {
-    message: "password not match",
+    message: "rePwd",
     path: ['rePwd']
   });
 
