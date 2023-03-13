@@ -13,7 +13,7 @@ function CardLayout(props: cardType) {
     const theme = useTheme();
     return (
         <main className={style.layout}
-            css={css`--background-color: ${theme.palette.divider};`}>
+            css={css`--background-color: ${theme.palette.background.default};`}>
             {props.childrend}
         </main>
     )

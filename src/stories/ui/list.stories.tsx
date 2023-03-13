@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { within, userEvent } from '@storybook/testing-library';
-import List from '../component/ui/ListUI';
+import List from '../../component/ui/ListUI';
 
 export default {
     title: 'UI/List',

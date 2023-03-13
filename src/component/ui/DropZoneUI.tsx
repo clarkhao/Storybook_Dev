@@ -1,7 +1,7 @@
 //应用
 import React from 'react';
 import {FileNameListType,FileErrMsgType} from '../utils/type';
-import {iconLibrary} from '../utils/define';
+import {iconLibrary} from '../utils';
 //style
 import style from './DropZoneUI.module.css';
 import {css} from '@emotion/react';

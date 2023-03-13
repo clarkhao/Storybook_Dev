@@ -9,12 +9,22 @@ import { css } from "@emotion/react";
 //组件
 import Input from "../../ui/InputUI";
 import Button from "@mui/material/Button";
-import { iconLibrary } from "../../utils";
+import { iconLibrary, JsonValue } from "../../utils";
 import Link from "next/link";
+import { useRouter } from "next/router";
+//type
+import { SideSignup } from "../../utils";
 
-type TSignupRight = {};
+type TSignupRight = {
+  /**
+   * i18n data
+   */
+  i18n?: SideSignup;
+};
 
-function SignupRight({ ...props }: TSignupRight) {
+function SignupRight({ i18n, ...props }: TSignupRight) {
+  const router = useRouter();
+  const { locale } = router;
   const theme = useTheme();
   const [data, setData] = React.useState({
     email: "",
@@ -32,6 +42,9 @@ function SignupRight({ ...props }: TSignupRight) {
   const [isLoading, setIsLoading] = React.useState(false);
   //如果成功出现成功提示
   const [isSuccess, setIsSuccess] = React.useState(false);
+  React.useEffect(() => {
+    setErrMsgs({ ...errMsgs, email: "", name: "", password: "", rePwd: "" });
+  }, [locale]);
 
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -72,7 +85,32 @@ function SignupRight({ ...props }: TSignupRight) {
             }
           })
           .forEach((e) => {
-            errMessages[e.path[0]] = e.message;
+            switch (e.path[0]) {
+              case "email":
+                errMessages[e.path[0]] = i18n?.email_err as string;
+                break;
+              case "name":
+                if (e.message === "min")
+                  errMessages[e.path[0]] = i18n?.user_min_err as string;
+                else if (e.message === "max")
+                  errMessages[e.path[0]] = i18n?.user_max_err as string;
+                else if (e.message === "regex")
+                  errMessages[e.path[0]] = i18n?.user_regex_err as string;
+                break;
+              case "password":
+                if (e.message === "min")
+                  errMessages[e.path[0]] = i18n?.password_min_err as string;
+                else if (e.message === "max")
+                  errMessages[e.path[0]] = i18n?.password_max_err as string;
+                else if (e.message === "regex")
+                  errMessages[e.path[0]] = i18n?.password_regex_err as string;
+                break;
+              case "rePwd":
+                errMessages[e.path[0]] = i18n?.rePwd_err as string;
+                break;
+              default:
+                break;
+            }
           });
         console.log(`errMessages: ${JSON.stringify(errMessages)}`);
         setErrMsgs({ ...errMsgs, ...errMessages });
@@ -81,52 +119,90 @@ function SignupRight({ ...props }: TSignupRight) {
         //encrypt data
         const encrypted = await hybridEncrypt(verified.data);
         //post data
-        fetch('https://userauth.clarkhao.repl.co/api/v0/auth/signup', {
-          method: 'POST',
-          mode: 'cors',
-          body: new URLSearchParams({data: encrypted}),
-          cache: 'no-cache',
-          redirect: 'follow'
-        }).then(response => {
+        fetch("https://userauth.clarkhao.repl.co/api/v0/auth/signup", {
+          method: "POST",
+          mode: "cors",
+          body: new URLSearchParams({ data: encrypted }),
+          cache: "no-cache",
+          redirect: "follow",
+        }).then(async (response) => {
           setIsLoading(false);
-          if(response.status === 201) {
-            
-          } else {
-            return response.json();
+          const json = await response.json();
+          console.log(json);
+          const messages = (
+            JSON.parse(JSON.stringify(json)) as { msg: string }
+          )["msg"];
+          switch (response.status) {
+            case 201:
+              router.push("/auth/success");
+              break;
+            case 409:
+              setErrMsgs({
+                ...errMsgs,
+                ...{
+                  name: messages.includes("name")
+                    ? (i18n?.http_409_name as string)
+                    : "",
+                  email: messages.includes("email")
+                    ? (i18n?.http_409_email as string)
+                    : "",
+                },
+              });
+              break;
+            default:
+              break;
           }
-        })
-        .then(response => {
-          const data = new URLSearchParams(response);
-          console.log(data.get('msg'));          
-
-        })
+        });
       }
-      
     } catch (error) {
       //可能的错误，加密失败，网络失败
       console.log(`${error}`);
     }
   };
+  const handleGithub = (e: React.MouseEvent) => {
+    const rootURl = "https://github.com/login/oauth/authorize";
+    const options = {
+      client_id: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID as string,
+      redirect_uri: process.env
+        .NEXT_PUBLIC_GITHUB_OAUTH_REDIRECT_URL as string,
+      scope: "user:email",
+    };
+    const qs = new URLSearchParams(options);
+    const url = `${rootURl}?${qs.toString()}`;
+    router.push(url);
+  };
+  const handleGoogle = (e: React.MouseEvent) => {
+    const rootURl = "https://accounts.google.com/o/oauth2/auth";
+    const options = {
+      client_id: process.env.NEXT_PUBLIC_Google_CLIENT_ID as string,
+      redirect_uri: process.env
+        .NEXT_PUBLIC_GOOGLE_OAUTH_REDIRECT_URL as string,
+      scope: "email profile",
+      response_type: 'code',
+    };
+    const qs = new URLSearchParams(options);
+    const url = `${rootURl}?${qs.toString()}`;
+    router.push(url);
+  }
   return (
     <div
       className={style.container}
       css={css`
         --signup-right-bg: ${theme.palette.neutral.main};
         --signup-right-font-color: ${theme.palette.text.primary};
-        --signup-right-shadow: ${theme.palette.mode === "light"
-          ? theme.shadows[4]
-          : "0px 2px 4px -1px rgba(255,255,255,0.2),0px 4px 5px 0px rgba(255,255,255,0.14)"};
+        --signup-right-shadow: ${theme.shadows[4]};
         --signup-right-link-color: ${theme.palette.primary.main};
       `}
     >
       <header>
-        <h2>创建账户</h2>
-        <Link href="/auth/signin">已有账户直接登陆？</Link>
+        <div className={style.title}>{i18n?.title}</div>
+        <Link href="/auth/signin">{i18n?.signinHint}</Link>
       </header>
       <form id="signup-form" className={style.form}>
         <Input
           type="email"
           name="email"
+          labelText={i18n?.email_title}
           width="100%"
           value={data.email}
           handleInput={handleEmailInput}
@@ -136,7 +212,7 @@ function SignupRight({ ...props }: TSignupRight) {
         <Input
           type="text"
           name="name"
-          labelText="User"
+          labelText={i18n?.user_title}
           width="100%"
           value={data.name}
           handleInput={handleUserInput}
@@ -146,6 +222,7 @@ function SignupRight({ ...props }: TSignupRight) {
         <Input
           type="password"
           name="pwd"
+          labelText={i18n?.password_title}
           width="100%"
           value={data.password}
           handleInput={handlePwdInput}
@@ -155,34 +232,36 @@ function SignupRight({ ...props }: TSignupRight) {
         <Input
           type="password"
           name="rpwd"
-          labelText="确认密码"
+          labelText={i18n?.rePwd_title}
           width="100%"
           value={data.rePwd}
           handleInput={handleRePwdInput}
           errMsg={errMsgs.rePwd}
           handleFocus={handleClearErr}
         />
-        <Link href="/auth/privacy">点击创建账户，同意隐私条款</Link>
+        <Link href="/auth/privacy">{i18n?.privacy}</Link>
         <Button variant="contained" fullWidth onClick={handleSubmit}>
-          创建账户
+          {i18n?.submit}
         </Button>
       </form>
       <footer>
-        <div>或者</div>
+        <div>{i18n?.oauth_hint}</div>
         <div className={style.oauth}>
           <Button
             variant="contained"
             startIcon={iconLibrary.get("github")}
             color="info"
+            onClick={handleGithub}
           >
-            使用Github登陆
+            {i18n?.oauth_github}
           </Button>
           <Button
             variant="contained"
             startIcon={iconLibrary.get("google")}
             color="warning"
+            onClick={handleGoogle}
           >
-            使用Google登陆
+            {i18n?.oauth_google}
           </Button>
         </div>
       </footer>

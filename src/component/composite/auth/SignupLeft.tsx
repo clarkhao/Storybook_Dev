@@ -1,37 +1,47 @@
 //应用模块
 import React, { Fragment } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import {JsonValue} from '../../utils';
 //style
 import style from "./SignupLeft.module.css";
 import { useTheme } from "@mui/material/styles";
 import { css } from "@emotion/react";
 //组件
 import Mark from "../../ui/MarkUI";
+//type
+import {SideSignup} from '../../utils';
 
 type TSignupLeft = {
   /**
    * url for lottie file
    */
   src?: string;
+  /**
+   * i18n data
+   */
+  i18n?: SideSignup;
 };
 
-function SignupLeft({ src, ...props }: TSignupLeft) {
+function SignupLeft({ src, i18n, ...props }: TSignupLeft) {
   const theme = useTheme();
   return (
     <div
       className={style.container}
       css={css`
-        --signup-left-bg: ${theme.palette.primary.dark};
+        --signup-left-bg: ${theme.palette.mode === "light"
+          ? theme.palette.primary.dark
+          : '#11508f'};
+        --signup-left-bottom-bg: ${theme.palette.mode === "light"
+          ? "white"
+          : theme.palette.secondary.main};
         --signup-left-font-color: ${theme.palette.primary.contrastText};
-        --signup-left-shadow: ${theme.palette.mode === "light"
-          ? theme.shadows[4]
-          : "0px 2px 4px -1px rgba(255,255,255,0.2),0px 4px 5px 0px rgba(255,255,255,0.14)"};
+        --signup-left-shadow: ${theme.shadows[4]};
       `}
     >
       <div>
         <Mark size={50} />
-        <h1>与全球宠物爱好者连接</h1>
-        <p>探索宠物生活的乐趣，与全球宠物爱好者分享你的独特故事。在这里，你可以和宠物一起享受美好的生活，还可以发现各种关于宠物的好玩、有趣的事情。</p>
+        <h2>{i18n?.title}</h2>
+        <p>{i18n?.paragraph}</p>
       </div>
       <div className={style.animate}>
         <Player
