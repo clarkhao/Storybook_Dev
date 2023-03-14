@@ -2,8 +2,6 @@ import * as nacl from "tweetnacl";
 import * as naclUtil from "tweetnacl-util";
 import CryptoJS from "crypto-js";
 
-import JSEncrypt from "jsencrypt";
-
 const randomString = (length: number) => {
   const randomValues = new Uint8Array(length);
   crypto.getRandomValues(randomValues);
@@ -82,7 +80,10 @@ const hybridEncrypt = async (data: unknown) => {
     //非对称加密
     const JSEncrypt = (await import('jsencrypt')).default
     const encryptor = new JSEncrypt();
-    encryptor.setPublicKey(process.env.NEXT_PUBLIC_SECRET_KEY as string);
+    //env publickey saved in base64 string, first from base64 to string
+    const savedKey = process.env.NEXT_PUBLIC_SECRET_KEY as string;
+    const publicKey = atob(savedKey);
+    encryptor.setPublicKey(publicKey);
     const encryptedKey = encryptor.encrypt(keyString.concat(`:${ivString}`));
     if (!encryptedKey) throw new Error("asymmetric encrypte failed");
     return encryptedString.concat(`:${encryptedKey}`);
