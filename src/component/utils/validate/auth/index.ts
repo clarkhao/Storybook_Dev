@@ -24,6 +24,7 @@ export const signupSchema = z
       .min(6, {
         message: "min",
       })
+      .max(25, { message: "max" })
       .regex(/^(?=.*[A-Z])[a-zA-Z0-9]+$/, {
         message: "regex",
       }),
@@ -31,7 +32,7 @@ export const signupSchema = z
   })
   .refine((data) => data.password === data.rePwd, {
     message: "rePwd",
-    path: ['rePwd']
+    path: ["rePwd"],
   });
 
 export const verifySignup = async (data: TSignupData) =>
