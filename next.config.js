@@ -8,6 +8,20 @@ const nextConfig = {
     //auto detect
     //localeDetection: false
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.dog.ceo',
+        port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'fastly.picsum.photos',
+        port: ''
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig

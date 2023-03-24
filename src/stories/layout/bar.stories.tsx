@@ -4,7 +4,7 @@ import { within, userEvent } from '@storybook/testing-library';
 import Bar from '../../component/layout/BarLayout';
 
 export default {
-    title: 'Composite/Bar',
+    title: 'Layout/Bar',
     component: Bar,
 } as ComponentMeta<typeof Bar>;
 

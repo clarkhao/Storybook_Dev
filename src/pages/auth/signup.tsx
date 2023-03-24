@@ -29,7 +29,7 @@ const SignupPage: NextPage<SignupProps> = (props) => {
         --signup-page-bg: ${theme.palette.background.default};
       `}
     >
-      <ThemeI18n size="60px" />
+      <header className={style.bar}><ThemeI18n size={60} /></header>
       <LeftRight
         left={<SignupLeft i18n={props.i18n.left} />}
         right={<SignupRight i18n={props.i18n.right} />}

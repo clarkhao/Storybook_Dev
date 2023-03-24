@@ -6,15 +6,27 @@ import { useTheme } from '@mui/material/styles';
 import {css} from '@emotion/react';
 
 export type cardType = {
-    childrend: React.ReactNode,
+    children: React.ReactNode,
+    /**
+     * height
+     */
+    height: string;
+    /**
+     * width
+     */
+    width: string;
 }
 
 function CardLayout(props: cardType) {
     const theme = useTheme();
     return (
         <main className={style.layout}
-            css={css`--background-color: ${theme.palette.background.default};`}>
-            {props.childrend}
+            css={css`
+            --card-background-color: ${theme.palette.background.default};
+            --card-height: ${props.height};
+            --card-width: ${props.width};
+            `}>
+            {props.children}
         </main>
     )
 }

@@ -1,0 +1,25 @@
+.container {
+  width: 200px;
+  height: 100vh;
+  background-color: var(--sidebar-menu-bg-color);
+  position: absolute;
+  left: 0;
+  transition: left 0.1s;
+}
+.main ul {
+  margin: 0;
+  padding: 0;
+  
+}
+.main ul > li {
+  display: block;
+  cursor: pointer;
+  text-align: left;
+  padding: 5px;
+}
+.main ul > li:hover {
+  background-color: lightgray;
+}
+.hide {
+  left: -250px;
+}
