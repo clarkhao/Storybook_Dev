@@ -9,5 +9,6 @@
   align-items: stretch;
   background-image: linear-gradient(var(--signin-right-bg),var(--signin-right-bottom-bg));
   box-shadow: var(--signin-right-shadow);
-  padding: 10px 30px;
+  padding: 0px 30px;
+  padding-bottom: 50px;
 }

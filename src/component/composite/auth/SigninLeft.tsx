@@ -1,5 +1,7 @@
 //应用模块
 import React, { Fragment } from "react";
+import { SigninSchema } from "../../utils/validate";
+import { hybridEncrypt } from "../../utils";
 //style
 import style from "./SigninLeft.module.css";
 import { useTheme } from "@mui/material/styles";
@@ -45,6 +47,96 @@ function SigninLeft({ i18n, ...props }: TSigninLeft) {
     e.preventDefault();
     setErrMsgs({ ...errMsgs, name: "", password: "" });
   };
+  const handleSubmit = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    //verify
+    const verified = SigninSchema.safeParse(data);
+    if (!verified.success) {
+      const issues = verified.error.issues;
+      console.log(issues);
+      const errSet = new Set();
+      const errMessages: { [key: string]: string } = {};
+      issues
+        .filter((e) => {
+          if (!errSet.has(e.path[0])) {
+            errSet.add(e.path[0]);
+            return true;
+          } else {
+            return false;
+          }
+        })
+        .forEach((e) => {
+          switch (e.path[0]) {
+            case "name":
+              if (e.message === "min")
+                errMessages[e.path[0]] =
+                  (i18n?.user_min_err as string) ?? "用户名至少5位字符";
+              else if (e.message === "max")
+                errMessages[e.path[0]] =
+                  (i18n?.user_max_err as string) ?? "用户名最多25位字符";
+              else if (e.message === "regex")
+                errMessages[e.path[0]] =
+                  (i18n?.user_regex_err as string) ??
+                  "用户名只能有字母数字组成";
+              break;
+            case "password":
+              if (e.message === "min")
+                errMessages[e.path[0]] =
+                  (i18n?.password_min_err as string) ?? "至少6位字母数字";
+              else if (e.message === "max")
+                errMessages[e.path[0]] =
+                  (i18n?.password_max_err as string) ?? "最多25位字符";
+              else if (e.message === "regex")
+                errMessages[e.path[0]] =
+                  (i18n?.password_regex_err as string) ??
+                  "包含至少1位大写小写字母或数字";
+              break;
+            default:
+              break;
+          }
+        });
+      console.log(`errMessages: ${JSON.stringify(errMessages)}`);
+      setErrMsgs({ ...errMsgs, ...errMessages });
+    } else {
+      //encrypt
+      const encrypted = await hybridEncrypt(verified.data);
+      //post
+      fetch(
+        `${process.env.NEXT_PUBLIC_ORIGIN}/api/v0/auth/signin?locale=${locale}`,
+        {
+          method: "POST",
+          mode: "no-cors",
+          body: new URLSearchParams({ data: encrypted }),
+          cache: "no-cache",
+          redirect: "follow",
+        }
+      ).then(async (response) => {
+        const json = await response.json();
+        console.log(json);
+        const messages = (JSON.parse(JSON.stringify(json)) as { msg: string })[
+          "msg"
+        ];
+        switch (response.status) {
+          case 200:
+            //存储localStorage something
+            router.push("/");
+            break;
+          case 401:
+            setErrMsgs({
+              ...errMsgs,
+              ...{
+                name: messages.includes("name") ? "用户名错误" : "",
+                password: messages.includes("password") ? "密码错误" : "",
+              },
+            });
+            break;
+          default:
+            //跳转到custom error page
+            break;
+        }
+      });
+    }
+  };
   return (
     <div
       className={style.container}
@@ -62,7 +154,7 @@ function SigninLeft({ i18n, ...props }: TSigninLeft) {
           <Button
             variant="contained"
             startIcon={iconLibrary.get("github")}
-            size='large'
+            size="large"
             color="info"
           >
             <Link href={`/api/v0/auth/signin?oauth=github&locale=${locale}`}>
@@ -72,7 +164,7 @@ function SigninLeft({ i18n, ...props }: TSigninLeft) {
           <Button
             variant="contained"
             startIcon={iconLibrary.get("google")}
-            size='large'
+            size="large"
             color="warning"
           >
             <Link href={`/api/v0/auth/signin?oauth=google&locale=${locale}`}>
@@ -102,7 +194,7 @@ function SigninLeft({ i18n, ...props }: TSigninLeft) {
             errMsg={errMsgs.password}
             handleFocus={handleClearErr}
           />
-          <Button variant="contained" fullWidth onClick={() => {}}>
+          <Button variant="contained" fullWidth onClick={handleSubmit}>
             {i18n?.submit ?? "登陆"}
           </Button>
         </form>

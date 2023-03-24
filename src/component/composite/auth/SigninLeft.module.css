@@ -2,14 +2,15 @@
   width: 100%;
   max-width: 500px;
   min-width: 300px;
-  height: 600px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
-  padding: 10px 30px;
+  padding: 0px 30px;
   background-color: var(--signin-left-bg);
   box-shadow: var(--signin-left-shadow);
+  padding-bottom: 50px;
 }
 .header {
   display: flex;
@@ -41,4 +42,9 @@
   flex-direction: column;
   justify-content: space-evenly;
   row-gap: 10px;
+}
+@media screen and (max-width: 900px) {
+  .main {
+    justify-content: space-evenly;
+  }
 }

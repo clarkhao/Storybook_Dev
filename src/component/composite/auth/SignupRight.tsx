@@ -1,6 +1,6 @@
 //应用模块
 import React, { Fragment } from "react";
-import { verifySignup, signupSchema } from "../../utils/validate";
+import { SignupSchema } from "../../utils/validate";
 import { hybridEncrypt } from "../../utils";
 //style
 import style from "./SignupRight.module.css";
@@ -70,7 +70,7 @@ function SignupRight({ i18n, ...props }: TSignupRight) {
     try {
       e.preventDefault();
       //verify data
-      const verified = signupSchema.safeParse(data);
+      const verified = SignupSchema.safeParse(data);
       if (!verified.success) {
         const issues = verified.error.issues;
         const errSet = new Set();
@@ -163,6 +163,7 @@ function SignupRight({ i18n, ...props }: TSignupRight) {
               });
               break;
             default:
+              //跳转到custom error page
               break;
           }
         });
@@ -186,7 +187,7 @@ function SignupRight({ i18n, ...props }: TSignupRight) {
     >
       <header>
         <div className={style.title}>{i18n?.title ?? "创建账户"}</div>
-        <Link href="/auth/signin">
+        <Link href="/v0/auth/signin">
           {i18n?.signinHint ?? "已有账户直接登陆"}
         </Link>
       </header>
@@ -246,6 +247,7 @@ function SignupRight({ i18n, ...props }: TSignupRight) {
               variant="contained"
               startIcon={iconLibrary.get("github")}
               color="info"
+              size='medium'
             >
               <Link href={`/api/v0/auth/signin?oauth=github&locale=${locale}`}>
                 {i18n?.oauth_github ?? "使用GITHUB登陆"}
@@ -255,6 +257,7 @@ function SignupRight({ i18n, ...props }: TSignupRight) {
               variant="contained"
               startIcon={iconLibrary.get("google")}
               color="warning"
+              size='medium'
             >
               <Link href={`/api/v0/auth/signin?oauth=google&locale=${locale}`}>
                 {i18n?.oauth_google ?? "使用GOOGLE登陆"}

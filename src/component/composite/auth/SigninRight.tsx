@@ -7,6 +7,7 @@ import { useTheme } from "@mui/material/styles";
 import { css } from "@emotion/react";
 //组件
 import Button from "@mui/material/Button";
+import Link from "next/link";
 //type
 import { SideSign } from "../../utils";
 
@@ -50,8 +51,8 @@ function SigninRight({ i18n, src, ...props }: TSigninRight) {
           className="player"
         />
       </main>
-      <Button variant="contained" fullWidth onClick={() => {}} color='info'>
-        {i18n?.submit ?? "注册"}
+      <Button variant="contained" fullWidth color="secondary">
+        <Link href="/v0/auth/signup">{i18n?.submit ?? "注册"}</Link>
       </Button>
     </div>
   );

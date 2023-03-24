@@ -7,3 +7,16 @@
   align-items:center;
   background-color: var(--signup-page-bg);
 }
+.bar {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  position: absolute;
+  top: 2%;
+}
+@media screen and (max-width: 1200px) {
+  .bar {
+    display: none;
+  }
+}
