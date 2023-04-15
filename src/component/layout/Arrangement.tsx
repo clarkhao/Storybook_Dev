@@ -16,27 +16,27 @@ type TArrangement = {
 };
 
 function Arrangement({ width = 300, ...props }: TArrangement) {
-  const [renderWidth, setRenderWidth] = React.useState<number>(0);
-  fecthMasonry("masonry", "sub", Math.floor((renderWidth - 120) / width));
+  const [renderWidth, setRenderWidth] = React.useState<number>(document.getElementById('masonry')?.offsetWidth as number);
   React.useEffect(() => {
-    setRenderWidth(window.innerWidth);
+    console.log(document.getElementById('masonry')?.offsetWidth);
     const handleResize = () => {
-      setRenderWidth(window.innerWidth);
+      setRenderWidth(document.getElementById('masonry')?.offsetWidth as number);
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  React.useEffect(() => {
+    console.log(renderWidth)
+    fecthMasonry("masonry", "sub", Math.floor((document.getElementById('masonry')?.offsetWidth as number - 120) / width));
+  }, [renderWidth])
   const renderList = React.useMemo(() => {
     const columns = Math.floor(renderWidth / 200);
     let initial = new Array<Array<number>>(0);
     for (let i = 0; i < columns; i++) {
       initial.push(new Array<number>(0));
     }
-    console.log(initial);
     return Array.from(new Array(30).fill(0).keys());
   }, [renderWidth]);
-  /* */
-
   return (
     <div className="masonry-layout">
       <div id="masonry">
